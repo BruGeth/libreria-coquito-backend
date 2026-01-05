@@ -1,3 +1,9 @@
 spring:
   application:
     name: coquito-backend
+
+  profiles:
+    active: ${SPRING_PROFILE:local}
+
+server:
+  port: 8080
