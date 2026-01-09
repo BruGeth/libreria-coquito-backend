@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "services")
-public class Service extends BaseEntity {
+@Table(name = "store_services")
+public class StoreService extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
