@@ -1,17 +1,18 @@
 package com.coquito.backend.service;
 
-import com.coquito.backend.entity.StoreService;
+import com.coquito.backend.dto.storeservice.StoreServiceRequest;
+import com.coquito.backend.dto.storeservice.StoreServiceResponse;
 import java.util.List;
 
 public interface StoreServiceManager {
 
-    StoreService create(StoreService service);
+    StoreServiceResponse create(StoreServiceRequest request);
 
-    StoreService update(Long id, StoreService service);
+    StoreServiceResponse update(Long id, StoreServiceRequest request);
 
-    StoreService findById(Long id);
+    StoreServiceResponse findById(Long id);
 
-    List<StoreService> findAll();
+    List<StoreServiceResponse> findAll();
 
     void delete(Long id);
 }

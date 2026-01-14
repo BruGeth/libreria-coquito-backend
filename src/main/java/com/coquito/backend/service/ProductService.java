@@ -1,17 +1,18 @@
 package com.coquito.backend.service;
 
-import com.coquito.backend.entity.Product;
+import com.coquito.backend.dto.product.ProductRequest;
+import com.coquito.backend.dto.product.ProductResponse;
 import java.util.List;
 
 public interface ProductService {
 
-    Product create(Product product);
+    ProductResponse create(ProductRequest request);
 
-    Product update(Long id, Product product);
+    ProductResponse update(Long id, ProductRequest request);
 
-    Product findById(Long id);
+    ProductResponse findById(Long id);
 
-    List<Product> findAll();
+    List<ProductResponse> findAll();
 
     void delete(Long id);
 }

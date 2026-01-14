@@ -1,17 +1,18 @@
 package com.coquito.backend.service;
 
-import com.coquito.backend.entity.Category;
+import com.coquito.backend.dto.category.CategoryRequest;
+import com.coquito.backend.dto.category.CategoryResponse;
 import java.util.List;
 
 public interface CategoryService {
 
-    Category create(Category category);
+    CategoryResponse create(CategoryRequest request);
 
-    Category update(Long id, Category category);
+    CategoryResponse update(Long id, CategoryRequest request);
 
-    Category findById(Long id);
+    CategoryResponse findById(Long id);
 
-    List<Category> findAll();
+    List<CategoryResponse> findAll();
 
     void delete(Long id);
 }

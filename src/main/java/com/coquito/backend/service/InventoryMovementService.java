@@ -1,13 +1,14 @@
 package com.coquito.backend.service;
 
-import com.coquito.backend.entity.InventoryMovement;
+import com.coquito.backend.dto.inventorymovement.InventoryMovementRequest;
+import com.coquito.backend.dto.inventorymovement.InventoryMovementResponse;
 import java.util.List;
 
 public interface InventoryMovementService {
 
-    InventoryMovement register(InventoryMovement movement);
+    InventoryMovementResponse register(InventoryMovementRequest request);
 
-    InventoryMovement findById(Long id);
+    InventoryMovementResponse findById(Long id);
 
-    List<InventoryMovement> findAll();
+    List<InventoryMovementResponse> findAll();
 }
