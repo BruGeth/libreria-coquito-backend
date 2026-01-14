@@ -1,53 +1,69 @@
 package com.coquito.backend.service.impl;
 
+import com.coquito.backend.dto.product.ProductMapper;
+import com.coquito.backend.dto.product.ProductRequest;
+import com.coquito.backend.dto.product.ProductResponse;
+import com.coquito.backend.entity.Category;
 import com.coquito.backend.entity.Product;
+import com.coquito.backend.repository.CategoryRepository;
 import com.coquito.backend.repository.ProductRepository;
 import com.coquito.backend.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
 
     @Override
-    public Product create(Product product) {
-        if (product.getPrice().compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Price cannot be negative");
-        }
-        return productRepository.save(product);
+    public ProductResponse create(ProductRequest request) {
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        
+        Product product = productMapper.toEntity(request, category);
+        Product saved = productRepository.save(product);
+        return productMapper.toResponse(saved);
     }
 
     @Override
-    public Product update(Long id, Product product) {
-        Product existing = findById(id);
-        existing.setName(product.getName());
-        existing.setDescription(product.getDescription());
-        existing.setPrice(product.getPrice());
-        existing.setStock(product.getStock());
-        existing.setCategory(product.getCategory());
-        return productRepository.save(existing);
-    }
-
-    @Override
-    public Product findById(Long id) {
-        return productRepository.findById(id)
+    public ProductResponse update(Long id, ProductRequest request) {
+        Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        
+        productMapper.updateEntity(existing, request, category);
+        Product updated = productRepository.save(existing);
+        return productMapper.toResponse(updated);
     }
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public ProductResponse findById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        return productMapper.toResponse(product);
+    }
+
+    @Override
+    public List<ProductResponse> findAll() {
+        return productRepository.findAll().stream()
+                .map(productMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void delete(Long id) {
-        productRepository.delete(findById(id));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        productRepository.delete(product);
     }
 }
