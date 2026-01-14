@@ -1,7 +1,9 @@
 package com.coquito.backend.controller;
 
-import com.coquito.backend.entity.Category;
+import com.coquito.backend.dto.category.CategoryRequest;
+import com.coquito.backend.dto.category.CategoryResponse;
 import com.coquito.backend.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +19,25 @@ public class CategoryController {
 
     @PostMapping(version = "1")
     @ResponseStatus(HttpStatus.CREATED)
-    public Category create(@RequestBody Category category) {
-        return categoryService.create(category);
+    public CategoryResponse create(@Valid @RequestBody CategoryRequest request) {
+        return categoryService.create(request);
     }
 
     @GetMapping(version = "1")
-    public List<Category> findAll() {
+    public List<CategoryResponse> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping(value = "/{id}", version = "1")
-    public Category findById(@PathVariable Long id) {
+    public CategoryResponse findById(@PathVariable Long id) {
         return categoryService.findById(id);
     }
 
     @PutMapping(value = "/{id}", version = "1")
-    public Category update(
+    public CategoryResponse update(
             @PathVariable Long id,
-            @RequestBody Category category) {
-        return categoryService.update(id, category);
+            @Valid @RequestBody CategoryRequest request) {
+        return categoryService.update(id, request);
     }
 
     @DeleteMapping(value = "/{id}", version = "1")

@@ -1,7 +1,9 @@
 package com.coquito.backend.controller;
 
-import com.coquito.backend.entity.StoreService;
+import com.coquito.backend.dto.storeservice.StoreServiceRequest;
+import com.coquito.backend.dto.storeservice.StoreServiceResponse;
 import com.coquito.backend.service.StoreServiceManager;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +19,25 @@ public class StoreServiceController {
 
     @PostMapping(version = "1")
     @ResponseStatus(HttpStatus.CREATED)
-    public StoreService create(@RequestBody StoreService service) {
-        return storeServiceManager.create(service);
+    public StoreServiceResponse create(@Valid @RequestBody StoreServiceRequest request) {
+        return storeServiceManager.create(request);
     }
 
     @GetMapping(version = "1")
-    public List<StoreService> findAll() {
+    public List<StoreServiceResponse> findAll() {
         return storeServiceManager.findAll();
     }
 
     @GetMapping(value = "/{id}", version = "1")
-    public StoreService findById(@PathVariable Long id) {
+    public StoreServiceResponse findById(@PathVariable Long id) {
         return storeServiceManager.findById(id);
     }
 
     @PutMapping(value = "/{id}", version = "1")
-    public StoreService update(
+    public StoreServiceResponse update(
             @PathVariable Long id,
-            @RequestBody StoreService service) {
-        return storeServiceManager.update(id, service);
+            @Valid @RequestBody StoreServiceRequest request) {
+        return storeServiceManager.update(id, request);
     }
 
     @DeleteMapping(value = "/{id}", version = "1")
