@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.coquito</groupId>
 	<artifactId>coquito-backend</artifactId>
-	<version>0.6.0</version>
+	<version>0.7.0</version>
 	<name>coquito-backend</name>
 	<description>Inventory &amp; sales system for Librería Coquito</description>
 	<url>https://github.com/BruGeth/libreria-coquito-backend</url>
