@@ -13,6 +13,16 @@ public interface CategoryService {
     CategoryResponse findById(Long id);
 
     List<CategoryResponse> findAll();
+    
+    // Filtrar categorías por estado activo
+    List<CategoryResponse> findByActive(Boolean active);
 
+    // Soft delete: marca como inactiva en lugar de borrar
     void delete(Long id);
+    
+    // Toggle: cambiar estado activo/inactivo rápidamente
+    CategoryResponse toggleActive(Long id);
+    
+    // Validar si una categoría puede ser usada (está activa)
+    void validateCategoryIsActive(Long categoryId);
 }
